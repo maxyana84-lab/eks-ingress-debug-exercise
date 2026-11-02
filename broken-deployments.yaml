@@ -1,0 +1,49 @@
+# broken-deployments.yaml - CONTAINS BUGS!
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: store-api
+  namespace: store
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: store-api
+      environment: production
+  template:
+    metadata:
+      labels:
+        app: store-api
+        environment: production
+    spec:
+      containers:
+      - name: api
+        image: hashicorp/http-echo
+        args: ["-text=store-api-ok", "-listen=:8080"]
+        ports:
+        - containerPort: 8080
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: store-frontend
+  namespace: store
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: store-frontend
+  template:
+    metadata:
+      labels:
+        app: store-frontend
+    spec:
+      containers:
+      - name: frontend
+        image: nginx:1.25-alpine
+        ports:
+        - containerPort: 80
