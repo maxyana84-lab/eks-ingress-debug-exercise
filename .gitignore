@@ -1,0 +1,22 @@
+# Secrets and local state – never commit these
+.env
+.env.*
+*.pem
+*.key
+*.tfstate
+*.tfstate.*
+.terraform/
+*.tfvars
+crash.log
+kubeconfig
+*.kubeconfig
+
+# Python / editors / OS
+__pycache__/
+*.pyc
+venv/
+.venv/
+.vscode/
+.idea/
+.DS_Store
+*:Zone.Identifier
